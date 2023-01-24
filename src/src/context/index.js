@@ -17,13 +17,18 @@ class MyProvider extends Component {
             ]
         }))
     }
-
+    removePlayerHandler=(idx)=>{
+        let newArrary=this.state.players;
+        newArrary.splice(idx,1);
+        this.setState({players:newArrary});
+    }
     render(){
         return(
             <>
                 <MyContext.Provider value={{
                     state:this.state,
-                    addPlayer:this.addPlayerHandler
+                    addPlayer:this.addPlayerHandler,
+                    removePlayer:this.removePlayerHandler,
                 }}>
                     {this.props.children}
                 </MyContext.Provider>
