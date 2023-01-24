@@ -1,11 +1,12 @@
 import React,{useState,useContext,useRef} from 'react'
 
 import {Button, Form, Alert } from 'react-bootstrap';
+import { MyContext } from '../context';
 
 const Stage_1 = () => {
 
   const textInput=useRef();
-
+  const context=useContext(MyContext);
   const [error, setError]=useState([false,'']);
 
   const handleSubmit=(e)=>{
@@ -15,7 +16,9 @@ const Stage_1 = () => {
 
     if(validate){
       setError([false,'']);
-      console.log('ADD PLAYER')
+      // console.log('ADD PLAYER')
+      context.addPlayer(value);
+      textInput.current.value='';
     }
 
     console.log(value);
@@ -34,7 +37,7 @@ const Stage_1 = () => {
     return true;
   };
 
-
+  console.log(context.state);
   return (
     <>
       <Form onSubmit={handleSubmit} className='mt-4'>
@@ -43,17 +46,17 @@ const Stage_1 = () => {
             type='text' placeholder='Add player name' name='player' 
             ref={textInput} 
           />
+          {error[0] ? 
+            <Alert>
+              {error[1]}
+            </Alert>
+              :null}
           <Button variant='primary' type='submit' className='miami'>
             Add player
-          </Button>
-          
+          </Button>          
         </Form.Group>
 
-        {error[0] ? 
-          <Alert>
-            {error[1]}
-          </Alert>
-        :null}
+    
       </Form>
     </>
   );
