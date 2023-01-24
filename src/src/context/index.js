@@ -3,12 +3,15 @@ import { ToastContainer,toast } from 'react-toastify';
 
 const MyContext=React.createContext();
 
+const DEFAULT_STATE={
+    stage:1,
+    players:[],
+    result:''
+}
+
 class MyProvider extends Component {
 
-    state={
-        stage:1,
-        players:[]
-    }
+    state=DEFAULT_STATE;
 
     addPlayerHandler=(name)=>{
         this.setState((prevState)=>({
@@ -39,11 +42,22 @@ class MyProvider extends Component {
                 stage:2
             },()=>{
                 setTimeout(()=>{
-                    console.log('loose')
+                    this.generateLooser();
                 },2000)
             })
         }
 
+    }
+
+    generateLooser=()=>{
+        const {players}=this.state;
+        this.setState({
+            result:players[Math.floor(Math.random()*players.length)]
+        })
+    }
+
+    resetGame=()=>{
+        this.setState(DEFAULT_STATE);
     }
     render(){
         return(
@@ -53,6 +67,8 @@ class MyProvider extends Component {
                     addPlayer:this.addPlayerHandler,
                     removePlayer:this.removePlayerHandler,
                     next:this.nextHandler,
+                    getNewLooser:this.generateLooser,
+                    resetGame:this.resetGame,
                 }}>
                     {this.props.children}
                 </MyContext.Provider>
