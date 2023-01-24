@@ -2,6 +2,7 @@ import React,{useContext} from 'react'
 import { MyContext } from './context';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './css/app.css';
 
 import Stage_1 from './components/Stage_1';
